@@ -4,15 +4,24 @@ import axios from 'axios';
 function SeatSelection({ filmId, numberOfSeats, onClose, onSeatsConfirmed }) {
     const [availableSeats, setAvailableSeats] = useState([]);
     const [selectedSeats, setSelectedSeats] = useState([]);
+    const [suggestedSeats, setSuggestedSeats] = useState([]);
 
     useEffect(() => {
         axios.get(`http://localhost:8080/api/seats/all`)
             .then(response => {
-                console.log(response.data);
                 setAvailableSeats(response.data);
             })
             .catch(error => console.error('There was an error fetching the seats', error));
-    }, [filmId]);
+
+        if (numberOfSeats > 0) {
+            axios.get(`http://localhost:8080/api/seats/suggest?requestedSeats=${numberOfSeats}`)
+                .then(response => {
+                    const suggestedSeatIds = response.data.map(seat => seat.id);
+                    setSuggestedSeats(suggestedSeatIds);
+                })
+                .catch(error => console.error('Error fetching suggested seats', error));
+        }
+    }, [filmId, numberOfSeats]);
 
     const handleSeatClick = (seatId) => {
         setSelectedSeats(prevSelectedSeats => {
@@ -45,6 +54,7 @@ function SeatSelection({ filmId, numberOfSeats, onClose, onSeatsConfirmed }) {
                             const seatId = seat?.id;
                             const isAvailable = !seat?.occupied;
                             const isSelected = selectedSeats.includes(seatId);
+                            const isSuggested = suggestedSeats.includes(seatId);
 
                             return (
                                 <button
@@ -52,8 +62,11 @@ function SeatSelection({ filmId, numberOfSeats, onClose, onSeatsConfirmed }) {
                                     onClick={() => isAvailable && seatId && handleSeatClick(seatId)}
                                     style={{
                                         marginRight: '5px',
-                                        background: isSelected ? 'green' : isAvailable ? 'lightgrey' : 'red',
-                                        color: 'white'
+                                        background: isSelected ? 'green' : isSuggested ? 'yellow' : isAvailable ? 'lightgrey' : 'red',
+                                        color: 'white',
+                                        padding: '10px',
+                                        border: 'none',
+                                        cursor: isAvailable ? 'pointer' : 'not-allowed',
                                     }}
                                     disabled={!isAvailable}
                                 >
@@ -63,12 +76,9 @@ function SeatSelection({ filmId, numberOfSeats, onClose, onSeatsConfirmed }) {
                         })}
                     </div>
                 ))}
-
-
-
             </div>
-            <button onClick={confirmSeats}>Kinnita valik</button>
-            <button onClick={onClose}>Sulge</button>
+            <button onClick={confirmSeats} style={{ marginTop: '20px', padding: '10px 20px' }}>Kinnita valik</button>
+            <button onClick={onClose} style={{ marginTop: '10px', padding: '10px 20px' }}>Sulge</button>
         </div>
     );
 }

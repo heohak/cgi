@@ -18,8 +18,8 @@ public class SeatController {
     private SeatService cinemaHallService;
 
     @GetMapping("/suggest")
-    public List<Seat> suggestSeats(@RequestParam int numberOfSeats) {
-        return cinemaHallService.suggestSeats(numberOfSeats);
+    public List<Seat> suggestSeats(@RequestParam("requestedSeats") int requestedSeats) {
+        return cinemaHallService.suggestSeats(requestedSeats);
     }
 
     @GetMapping("/all")
