@@ -1,16 +1,16 @@
 
 import './App.css';
-import Films from "./components/Films";
-import AddFilm from "./components/AddFilm";
+import FilmsList from "./components/FilmsList";
 
 function App() {
-  return (
-      <div>
-        <h1>Kino Rakendus</h1>
-        <Films />
-        <AddFilm />
-      </div>
-  );
+    return (
+        <div className="App">
+            <header className="App-header">
+                <h1>Kinokava</h1>
+            </header>
+            <FilmsList />
+        </div>
+    );
 }
 
 export default App;
