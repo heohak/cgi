@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class SeatService {
@@ -16,8 +17,15 @@ public class SeatService {
 
     private final int rows = 10;
     private final int seatsPerRow = 12;
+    private final Random random = new Random();
+
 
     @PostConstruct
+    public void initializeSeats() {
+        generateSeats();
+        markSomeSeatsAsOccupied();
+    }
+
     public void generateSeats() {
         if (seatRepository.count() == 0) {
             for (int row = 1; row <= rows; row++) {
@@ -27,6 +35,19 @@ public class SeatService {
             }
         }
     }
+
+    private void markSomeSeatsAsOccupied() {
+        List<Seat> allSeats = seatRepository.findAll();
+        int numberOfSeatsToOccupy = allSeats.size() / 10;
+
+        for (int i = 0; i < numberOfSeatsToOccupy; i++) {
+            int indexToOccupy = random.nextInt(allSeats.size());
+            Seat seatToOccupy = allSeats.get(indexToOccupy);
+            seatToOccupy.setOccupied(true);
+            seatRepository.save(seatToOccupy);
+        }
+    }
+
 
     public List<Seat> suggestSeats(int numberOfSeats) {
         return seatRepository.findByIsOccupiedFalse().stream().limit(numberOfSeats).toList();

@@ -8,6 +8,7 @@ function SeatSelection({ filmId, numberOfSeats, onClose, onSeatsConfirmed }) {
     useEffect(() => {
         axios.get(`http://localhost:8080/api/seats/all`)
             .then(response => {
+                console.log(response.data);
                 setAvailableSeats(response.data);
             })
             .catch(error => console.error('There was an error fetching the seats', error));
@@ -40,25 +41,31 @@ function SeatSelection({ filmId, numberOfSeats, onClose, onSeatsConfirmed }) {
                 {Array.from({ length: 10 }).map((_, rowIndex) => (
                     <div key={rowIndex} style={{ margin: '10px 0', display: 'flex' }}>
                         {Array.from({ length: 12 }).map((_, seatIndex) => {
-                            const seatId = `${rowIndex}_${seatIndex}`;
-                            const isAvailable = !availableSeats.some(seat => seat.id === seatId && seat.isOccupied);
+                            const seat = availableSeats.find(seat => seat.row === rowIndex + 1 && seat.seatNumber === seatIndex + 1);
+                            const seatId = seat?.id;
+                            const isAvailable = !seat?.occupied;
+                            const isSelected = selectedSeats.includes(seatId);
+
                             return (
                                 <button
-                                    key={seatId}
-                                    onClick={() => isAvailable && handleSeatClick(seatId)}
+                                    key={`seat-${rowIndex}-${seatIndex}`}
+                                    onClick={() => isAvailable && seatId && handleSeatClick(seatId)}
                                     style={{
                                         marginRight: '5px',
-                                        background: selectedSeats.includes(seatId) ? 'green' : isAvailable ? 'lightgrey' : 'red',
+                                        background: isSelected ? 'green' : isAvailable ? 'lightgrey' : 'red',
                                         color: 'white'
                                     }}
                                     disabled={!isAvailable}
                                 >
-                                    Rida {rowIndex + 1}, Koht {seatIndex + 1}
+                                    {`Rida ${rowIndex + 1}, Koht ${seatIndex + 1}`}
                                 </button>
                             );
                         })}
                     </div>
                 ))}
+
+
+
             </div>
             <button onClick={confirmSeats}>Kinnita valik</button>
             <button onClick={onClose}>Sulge</button>
