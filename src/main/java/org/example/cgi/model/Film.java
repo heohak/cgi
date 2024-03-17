@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 
 import lombok.*;
 
+import java.time.LocalTime;
+
 @Entity
 @Table(name="Films")
 @NoArgsConstructor
@@ -19,7 +21,7 @@ public class Film {
     private String genre;
     private int ageRestriction;
     private String language;
-    private String startTime;
+    private LocalTime startTime;
 
 
 }
