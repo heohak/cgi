@@ -10,10 +10,10 @@ function FilterForm({ onFilterSubmit }) {
     e.preventDefault();
     onFilterSubmit({ genre, ageRestriction, startTime, language });
   };
-
   return (
     <form onSubmit={handleSubmit}>
       <div>
+
         <label>Žanr:</label>
         <input type="text" value={genre} onChange={(e) => setGenre(e.target.value)} />
       </div>
