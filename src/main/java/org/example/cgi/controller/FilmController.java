@@ -84,5 +84,11 @@ public class FilmController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/recommendations")
+    public ResponseEntity<List<Film>> getFilmRecommendations(@RequestParam Long userId) {
+        List<Film> recommendations = filmService.recommendFilmsBasedOnWatchHistory(userId);
+        return ResponseEntity.ok(recommendations);
+    }
+
 
 }
