@@ -46,10 +46,10 @@ function SeatSelection({ filmId, numberOfSeats, onClose, onSeatsConfirmed }) {
     return (
         <div>
             <h3>Vali Istekohad</h3>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-                {Array.from({ length: 10 }).map((_, rowIndex) => (
-                    <div key={rowIndex} style={{ margin: '10px 0', display: 'flex' }}>
-                        {Array.from({ length: 12 }).map((_, seatIndex) => {
+            <div style={{display: 'flex', flexDirection: 'column'}}>
+                {Array.from({length: 10}).map((_, rowIndex) => (
+                    <div key={rowIndex} style={{margin: '10px 0', display: 'flex'}}>
+                        {Array.from({length: 12}).map((_, seatIndex) => {
                             const seat = availableSeats.find(seat => seat.row === rowIndex + 1 && seat.seatNumber === seatIndex + 1);
                             const seatId = seat?.id;
                             const isAvailable = !seat?.occupied;
@@ -60,14 +60,7 @@ function SeatSelection({ filmId, numberOfSeats, onClose, onSeatsConfirmed }) {
                                 <button
                                     key={`seat-${rowIndex}-${seatIndex}`}
                                     onClick={() => isAvailable && seatId && handleSeatClick(seatId)}
-                                    style={{
-                                        marginRight: '5px',
-                                        background: isSelected ? 'green' : isSuggested ? 'yellow' : isAvailable ? 'lightgrey' : 'red',
-                                        color: 'white',
-                                        padding: '10px',
-                                        border: 'none',
-                                        cursor: isAvailable ? 'pointer' : 'not-allowed',
-                                    }}
+                                    className={`seat ${isSelected ? 'seat-selected' : isSuggested ? 'seat-suggested' : isAvailable ? 'seat-available' : 'seat-unavailable'}`}
                                     disabled={!isAvailable}
                                 >
                                     {`Rida ${rowIndex + 1}, Koht ${seatIndex + 1}`}
@@ -77,8 +70,9 @@ function SeatSelection({ filmId, numberOfSeats, onClose, onSeatsConfirmed }) {
                     </div>
                 ))}
             </div>
-            <button onClick={confirmSeats} style={{ marginTop: '20px', padding: '10px 20px' }}>Kinnita valik</button>
-            <button onClick={onClose} style={{ marginTop: '10px', padding: '10px 20px' }}>Sulge</button>
+            <button onClick={confirmSeats} className="confirm-button">Kinnita valik</button>
+            <button onClick={onClose} className="close-button">Sulge</button>
+
         </div>
     );
 }

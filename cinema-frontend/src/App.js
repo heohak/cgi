@@ -6,7 +6,7 @@ function App() {
     return (
         <div className="App">
             <header className="App-header">
-                <h1>Kinokava</h1>
+                <h1>Kino veebirakendus</h1>
             </header>
             <FilmsList />
         </div>

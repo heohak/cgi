@@ -57,24 +57,25 @@ function FilmsList() {
     };
 
     return (
-        <div>
+        <div className="container">
             <FilterForm onFilterSubmit={handleFilterSubmit}/>
-            <button onClick={() => setShowRecommendations(!showRecommendations)}>
+            <button onClick={() => setShowRecommendations(!showRecommendations)} className="button">
                 {showRecommendations ? 'Peida Soovitused' : 'Näita Soovitusi'}
             </button>
             {showRecommendations && <FilmRecommendations userId={userId}/>}
-            <h2>Filmide Nimekiri</h2>
-            {!isSelectingNumberOfSeats && !isSelectingSeats && (
-                <ul>
-                    {films.map(film => (
-                        <li key={film.id}>
-                            {film.title} - Žanr: {film.genre}, Vanusepiirang: {film.ageRestriction},
-                            Keel: {film.language}, Algusaeg: {film.startTime}
-                            <button onClick={() => selectFilm(film.id)} style={{marginLeft: "10px"}}>Vali Film</button>
-                        </li>
-                    ))}
-                </ul>
-            )}
+            <h2 className="header">Filmide kava</h2>
+            <div className="content">
+                {!isSelectingNumberOfSeats && !isSelectingSeats && (
+                    <ul>
+                        {films.map(film => (
+                            <li key={film.id} className="card">
+                                {film.title} - Žanr: {film.genre}, Vanusepiirang: {film.ageRestriction},
+                                Keel: {film.language}, Algusaeg: {film.startTime}
+                                <button onClick={() => selectFilm(film.id)} className="button" style={{marginLeft: "10px"}}>Vali Film</button>
+                            </li>
+                        ))}
+                    </ul>
+                )}
             {isSelectingNumberOfSeats && <NumberOfSeatsSelection onSeatsNumberSelected={handleSeatsNumberSelected}/>}
             {isSelectingSeats && selectedFilm && (
                 <SeatSelection
@@ -84,6 +85,7 @@ function FilmsList() {
                     onSeatsConfirmed={handleSeatsConfirmed}
                 />
             )}
+        </div>
         </div>
     );
 }

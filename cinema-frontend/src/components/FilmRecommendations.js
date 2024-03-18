@@ -24,14 +24,15 @@ function FilmRecommendations() {
     }, []);
 
     return (
-        <div>
-            <h2>Soovitatud Filmid</h2>
-            <ul>
+        <div className="recommendations">
+            <h2 className="header">Soovitatud Filmid</h2>
+            <ul className="content">
                 {recommendations.map(film => (
-                    <li key={film.id}>{film.title} - {film.genre}</li>
+                    <li key={film.id} className="card">{film.title} - {film.genre}</li>
                 ))}
             </ul>
         </div>
     );
 }
+
 export default FilmRecommendations

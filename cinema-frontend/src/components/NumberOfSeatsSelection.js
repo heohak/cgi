@@ -9,7 +9,7 @@ function NumberOfSeatsSelection({ onSeatsNumberSelected }) {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="card">
             <div>
                 <label>Mitu istet soovid broneerida?</label>
                 <input
