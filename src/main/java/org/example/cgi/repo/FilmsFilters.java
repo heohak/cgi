@@ -12,7 +12,10 @@ public interface FilmsFilters {
             if (genre == null || genre.isEmpty()) {
                 return null;
             }
-            return criteriaBuilder.equal(root.get("genre"), genre);
+            return criteriaBuilder.equal(
+                    criteriaBuilder.lower(root.get("genre")),
+                    genre.toLowerCase()
+            );
         };
     }
 
@@ -30,7 +33,10 @@ public interface FilmsFilters {
             if (language == null || language.isEmpty()) {
                 return null;
             }
-            return criteriaBuilder.equal(root.get("language"), language);
+            return criteriaBuilder.equal(
+                    criteriaBuilder.lower(root.get("language")),
+                    language.toLowerCase()
+            );
         };
     }
 
