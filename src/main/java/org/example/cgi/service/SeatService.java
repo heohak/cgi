@@ -58,7 +58,7 @@ public class SeatService {
     }
 
     private List<Seat> suggestFromMiddle(List<Seat> availableSeats, int requestedSeats) {
-        int middleRowStart = rows / 2 - 1;
+        int middleRowStart = rows / 2;
         int middleRowEnd = rows / 2 + (rows % 2 == 0 ? 1 : 2);
         return findSequentialSeats(availableSeats, requestedSeats, middleRowStart, middleRowEnd);
     }
@@ -104,9 +104,6 @@ public class SeatService {
 
         return new ArrayList<>();
     }
-
-
-
 
 
     public List<Seat> getAllSeats() {
