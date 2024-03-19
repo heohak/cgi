@@ -28,7 +28,7 @@ public class FilmService {
         if (filmRepository.count() == 0) {
             List<Film> films = List.of(
                     new Film(null, "Kevade", "Draama", 0, "Eesti", LocalTime.of(18, 0)),
-                    new Film(null, "Suvi", "Draama", 0, "Eesti", LocalTime.of(19, 0)),
+                    new Film(null, "Suvi", "Draama", 0, "Vene", LocalTime.of(19, 0)),
                     new Film(null, "Sügis", "Draama", 16, "Inglise", LocalTime.of(20, 0)),
                     new Film(null, "Talv", "Draama", 0, "Eesti", LocalTime.of(21, 0)),
                     new Film(null, "Tõde ja õigus", "Draama", 0, "Inglise", LocalTime.of(18, 30)),

@@ -21,7 +21,7 @@ public interface FilmsFilters {
 
     public static Specification<Film> hasAgeRestriction(Integer ageRestriction) {
         return (root, query, criteriaBuilder) -> {
-            if (ageRestriction == null) {
+            if (ageRestriction == null || ageRestriction < 0) {
                 return null;
             }
             return criteriaBuilder.equal(root.get("ageRestriction"), ageRestriction);
